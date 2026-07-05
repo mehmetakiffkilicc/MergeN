@@ -1,0 +1,58 @@
+# Secrets
+.env
+*.env
+gemiin api.txt
+scrapper/youtube_cookies.txt
+*cookies*.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.cache/
+
+# Databases (runtime generated)
+*.db
+*.db-shm
+*.db-wal
+
+# Scraped data (runtime generated)
+scraped_data/
+
+# Node
+node_modules/
+dist/
+.dist/
+
+# Serena
+.serena/
+
+# Playwright MCP logs
+.playwright-mcp/
+
+# YouTube audio and transcript cache
+.youtube_cache/
+
+# Local logs
+*.log
+backend/*.log
+
+# Playwright reports and test results
+frontend/playwright-report/
+frontend/test-results/
+
+# Temporary scratch directories
+scratch/
+
+# Demo medya ve deneme dosyaları (repo dışı)
+*.mp4
+/thumnail.png
+/mergen logo.png
+taily deneme/
+
+# OS
+.DS_Store
+Thumbs.db
+

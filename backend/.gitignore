@@ -1,0 +1,7 @@
+.cache/
+.env
+__pycache__/
+*.pyc
+*.pyo
+checkpoints.db
+mergen_cache.db

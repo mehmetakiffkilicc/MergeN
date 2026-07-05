@@ -1,0 +1,18 @@
+# MergeN IP Kalkanı Proxy Listesi Şablonu
+# Bu dosyayı 'proxies.txt' olarak kopyalayarak proxylerinizi ekleyin.
+# Sistem her istekte bu listeden rastgele proxy seçecek ve çalışmayanları banlayacaktır.
+
+# Yöntem 1: IP ve Port (Anonim / Şifresiz Proxyler)
+# Format: http://IP:PORT
+http://185.123.45.67:8080
+http://194.56.78.90:3128
+
+# Yöntem 2: Kullanıcı Adı ve Şifreli Proxyler (Tavsiye Edilen)
+# Format: http://kullanici:sifre@IP:PORT
+http://mergenuser:mysecurepass123@185.123.45.67:8080
+http://akifproxy:pass456@194.56.78.90:3128
+
+# Yöntem 3: SOCKS5 Proxyleri
+# Format: socks5://kullanici:sifre@IP:PORT veya socks5://IP:PORT
+socks5://185.123.45.67:1080
+socks5://mergenuser:mysecurepass123@194.56.78.90:1080
