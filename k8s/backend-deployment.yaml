@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mergen-backend
+  labels:
+    app: mergen-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mergen-backend
+  template:
+    metadata:
+      labels:
+        app: mergen-backend
+    spec:
+      containers:
+      - name: backend
+        image: mergen-backend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8765
+        envFrom:
+        - configMapRef:
+            name: mergen-config
+        - secretRef:
+            name: mergen-secret
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8765
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mergen-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mergen-backend
+  ports:
+  - port: 8765
+    targetPort: 8765

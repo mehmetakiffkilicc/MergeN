@@ -1,360 +1,224 @@
 <div align="center">
-  <img src="https://github.com/mehmetakiffkilicc/MergeN/blob/main/frontend/src/mergen%20logo.png" alt="MergeN Logo" width="300" onerror="this.src='https://img.icons8.com/color/150/000000/artificial-intelligence.png'"/>
+  <img src="mergen logo.png" alt="MergeN Logo" width="220" onerror="this.src='https://img.icons8.com/color/150/000000/artificial-intelligence.png'"/>
 
- 
-  # MergeN: Alışveriş Röntgeni
-  
-  **"E-Ticaretteki İllüzyonu Kırın: Yapay Zeka Destekli Şeffaf Alışveriş Kararları!"**
-  
-  [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
-  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-  [![LangGraph](https://img.shields.io/badge/LangGraph-FF4F00?style=for-the-badge&logo=python&logoColor=white)](https://langchain-ai.github.io/langgraph/)
+  # MergeN: Yapay Zeka Destekli E-Ticaret Manipülasyon Analiz Platformu
+
+  **"Çok Ajanlı (Multi-Agent) LangGraph Pipeline ve Veri Madenciliği ile Şeffaf Alışveriş Kararları"**
+
+  [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+  [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+  [![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+  [![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+  [![Kubernetes](https://img.shields.io/badge/Kubernetes-Supported-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 </div>
 
- Youtube Demo Linki:https://youtu.be/YcPV8YE8uLA 
- 
-## 🎯 Projenin Amacı
-Günümüzde e-ticaret siteleri, yanıltıcı değerlendirmeler, yapay indirimler ve sponsorlu içeriklerle doludur. Tüketiciler, bir ürünün gerçekten iyi mi olduğunu yoksa sadece iyi mi "pazarlandığını" anlamakta zorlanmaktadır. 
+---
 
-  İsmini Türk mitolojisinde her şeyi gören, her gerçeği hedefinden vuran Bilge Okçu Tanrısı  **MergeN**' den alan, e-ticaret ürünlerindeki manipülasyonları tespit eden **çok ajanlı (multi-agent)** bir yapay zeka sistemidir. Kullanıcı bir ürün adını veya URL'sini girdiğinde, MergeN internetteki tüm izleri (pazar yeri yorumları, forumlar, Reddit, YouTube incelemeleri ve fiyat geçmişi) derinlemesine analiz eder ve manipülasyonlardan arındırılmış, objektif bir **AL / KOŞULLU AL / ALMA** kararı üretir.
+## 📖 İçindekiler
+- [Proje Hakkında ve Teknik Özet](#-proje-hakkında-ve-teknik-özet)
+- [Sistem Mimarisi ve Bileşenler](#-sistem-mimarisi-ve-bileşenler)
+- [LangGraph Ajan Pipeline Akışı](#-langgraph-ajan-pipeline-akışı)
+- [Gereksinimler](#-gereksinimler)
+- [Tak-Çalıştır Hızlı Kurulum & Otomatik Setup](#-tak-çalıştır-hızlı-kurulum--otomatik-setup)
+- [Sunucuları Başlatma ve Durdurma Scriptleri](#-sunucuları-başlatma-ve-durdurma-scriptleri)
+- [🐳 Docker & Docker Compose Kurulumu](#-docker--docker-compose-kurulumu)
+- [☸️ Kubernetes (k8s) Dağıtımı](#️-kubernetes-k8s-dağıtımı)
+- [Çevre Değişkenleri (.env)](#-çevre-değişkenleri-env)
+- [API Dokümantasyonu (Endpoints)](#-api-dokümantasyonu-endpoints)
+- [Chrome Eklentisi Kurulumu](#-chrome-eklentisi-kurulumu)
+- [Proje Dizin Yapısı](#-proje-dizin-yapısı)
 
 ---
 
-## ✨ Öne Çıkan Özellikler
-- 🤖 **Çok Ajanlı AI Mimarisi:** LangGraph altyapısıyla çalışan 6 farklı uzman ajanın kümülatif zekası.
-- 🧬 **Manipülasyon DNA'sı Analizi:** Yorum, yapay indirim, yanıltıcı görsel ve abartılı vaat tespiti.
-- ⚖️ **Challenger Mekanizması:** Sistem, aldığı son kararı çürütmeye çalışan özel bir ajanla test ederek sıfır hata payı / maksimum tarafsızlık hedefler.
-- 🌐 **Çoklu Veri Kaynağı:** Trendyol, Hepsiburada gibi platformların ötesine geçerek YouTube video transkriptlerini,başta teknoloji içerikleri olmak üzere tüm forumları ve Q&A kısımlarını tarar.
-- ⚡ **Gerçek Zamanlı Karar Destek:** Kullanıcının ihtiyaç profiline göre kişiselleştirilmiş "Advisor" (Danışman) ajan entegrasyonu.
+## 🎯 Proje Hakkında ve Teknik Özet
+
+**MergeN**, e-ticaret ürünlerinde yer alan sahte değerlendirmeleri, manipülatif indirimleri ve abartılı pazarlama iddialarını tespit eden **çok ajanlı (multi-agent)** bir karar destek sistemidir. 
+
+Kullanıcı bir ürün adı veya URL'si girdiğinde sistem; pazar yeri yorumlarını (Trendyol, Hepsiburada), teknoloji forumlarını (DH, Technopat vb.), Reddit başlıklarını ve YouTube video transkriptlerini çok kanallı olarak toplar. Ardından **LangGraph** tabanlı 6 uzman yapay zeka ajanı aracılığıyla 4 katmanlı **Manipülasyon DNA'sını** hesaplar ve nihai **AL / KOŞULLU AL / ALMA** tavsiyesi üretir.
 
 ---
 
-## 🏗️ LangGraph Mimarisi ve Veri Akışı
+## 🏗️ Sistem Mimarisi ve Bileşenler
 
-MergeN, sistemin merkezine **LangGraph** (StateGraph) teknolojisini yerleştirerek karmaşık karar alma mekanizmalarını kontrol edilebilir ve durum tabanlı (stateful) bir pipeline'a dönüştürür. 
+Sistem 4 ana katmandan oluşmaktadır:
 
-### 🤔 Neden LangGraph?
+1. **Backend (`/backend`)**:
+   - **FastAPI**: Asenkron REST ve Server-Sent Events (SSE) streaming API servisleri.
+   - **LangGraph StateGraph**: Durum tabanlı (stateful) çok ajanlı orkestrasyon.
+   - **MemorySaver (SQLite Checkpointer)**: İnsan müdahalesi (interrupt) gerektiren durumları askıya alma ve kaldığı yerden devam ettirme.
+   - **SQLite Caching (`mergen_cache.db`)**: LLM ve web arama maliyetlerini düşüren asenkron disk önbelleği.
 
-MergeN'in mimarisi, birbirinden bağımsız çalışabilen ama aynı zamanda 
-birbirine bağlı kararlar üretmesi gereken 6 ajan içeriyor. Bu yapı, 
-klasik bir prompt zinciriyle yönetilemeyecek kadar 
-karmaşık; çünkü:
+2. **Frontend (`/frontend`)**:
+   - **React 19 & Vite**: Yüksek performanslı reaktif kullanıcı arayüzü.
+   - **Framer Motion & Recharts**: Dinamik grafikler, manipülasyon skor görselleştirmeleri ve akıcı animasyonlar.
 
-- **Durum sürekliliği gerekiyor:** Yargucu(Advisor Agent), kullanıcıdan yanıt 
-  beklerken pipeline'ın askıya alınması ve kaldığı yerden devam etmesi 
-  şart. LangGraph'ın `MemorySaver` + `interrupt_before` mekanizması 
-  bunu kutudan çıkar çıkmaz (out-of-the-box) sağlıyor.
+3. **Scrapper Motoru (`/scrapper`)**:
+   - **Subprocess Isolation**: Backend ile bağımsız çalışan, Playwright gerektirmeyen ultra hızlı HTTP/JSON veri toplayıcı.
+   - **YouTube Data API v3 & Tavily**: Otomatik video transkripti çekimi ve derin forum web taraması.
 
-- **Koşullu dallanma kritik:** Orchestrator, her aşamada hata durumunu 
-  kontrol ederek gereksiz API çağrısını kesiyor. Bu tür dinamik 
-  yönlendirme, CrewAI veya düz fonksiyon zincirlerinde elle kodlanması 
-  gereken bir şey; LangGraph'ta birinci sınıf bir özellik.
+4. **Chrome Eklentisi (`/extension`)**:
+   - **Manifest V3**: Pazar yeri ürün sayfalarında doğrudan çalışan ve backend API ile haberleşen hafif tarayıcı eklentisi.
 
-- **Hata izolasyonu:** Her ajan node'u bağımsız hata yönetimine sahip 
-  olduğundan, Research Agent'ta bir kaynak başarısız olursa sistem 
-  çökmek yerine mevcut veriyle devam ediyor.
+---
 
-LangGraph'ın StateGraph yapısı, her ajanın ne ürettiğini ve neden o karara vardığını 
-izlenebilir kılıyor — bu, bir karar destek sistemi için pazara çıkılabilirlik 
-kadar kritik.
+## ⚡ Tak-Çalıştır Hızlı Kurulum & Otomatik Setup
 
-### 🔄 Ajanlar (Nodes) ve Görevleri
-Sistemimiz, her biri belirli bir AI uzmanlığına sahip 6 farklı ajan node'undan (düğümünden) oluşmaktadır:
+Sistem **akıllı otomatik kurulum** özelliğine sahiptir. `start_servers.bat` veya `python start_servers.py` çalıştırıldığında gereksinimlerin (`venv`, paketler, `node_modules`, `.env`) varlığını otomatik denetler ve eksik bir bileşen bulursa **`setup.py` betiğini kendiliğinden çalıştırıp kurulumu tamamlar**.
 
-1. **Mergen Agent:** Projenin orkestratörü olan Mergen, LangGraph'ın yönlendirici (router) node'udur. Akışı yönetir ve ajanlar arası faz geçişlerini (`advance_phase`) sağlar. Herhangi bir adımda kritik bir hata tespit edilirse (`state["error"]`), gereksiz API maliyetlerini önlemek için sistemi anında `END` node'una yönlendirir (short-circuit).
-2. **Tulpar Agent:** Efsanevi uçan at Tulpar gibi eşsiz bir hıza sahiptir. İnternetin derinliklerine dalarak Trendyol, Hepsiburada gibi pazar yerlerinden, bağımsız forumlardan ve YouTube video transkriptlerinden asenkron olarak ham veri toplar.
-3. **Kam Agent (Röntgen):** Şaman (Kam) gibi yüzeyin altındakini görür. LangGraph state'ine giren verilerdeki gizli manipülasyonları ayrıştırır. 4 katmanlı (Yorum, Fiyat, Görsel, İddia)bir harita oluşturur ve her kaynaktan gelen ağırlıklı "Güven Skorunu" hesaplar.
+### Manuel Kurulum İstenirse:
+```cmd
+# Windows (Batch)
+setup.bat
 
-Örnek Agent Veri Çıktısı:
+# PowerShell
+.\setup.ps1
 
-```json
-
-{
-  "product_name": "Apple AirPods Pro (2. Nesil)",
-  "product_url": "https://www.trendyol.com/apple/airpods-pro-2-nesil-p-3528741",
-  "current_phase": "done",
-  "error": null,
-  "weighted_trust_score": {
-    "total": 68.0,
-    "forum_signal": 76.0,
-    "youtube_signal": 64.0,
-    "ecommerce_signal": 58.0,
-    "claim_signal": 71.0
-  },
-  "manipulation_dna": {
-    "review_layer": 42.0,
-    "price_layer": 18.0,
-    "visual_layer": 28.0,
-    "claim_layer": 56.0
-  },
-  "xray": {
-    "price_verification": {
-      "real_discount": 6.0,
-      "fake_discount_alert": true
-    },
-    "claims": [
-      {
-        "claim": "Aktif Gürültü Engelleme (ANC) bir önceki nesle göre 2 kata kadar daha fazla arka plan gürültüsünü engeller.",
-        "reality": "Bağımsız testler ve kullanıcı analizlerine göre alt frekanslarda (motor, yol gürültüsü) gerçekten ~1.8x bir engelleme görülürken, insan sesi gibi orta frekanslarda fark %30 civarındadır.",
-        "score": 0.72,
-        "contrary_percentage": 28
-      },
-      {
-        "claim": "Tek şarjla 6 saate kadar dinleme süresi ve şarj kutusuyla toplam 30 saat kullanım.",
-        "reality": "Yüksek ses seviyesinde ve ANC ortamlarında tek şarj ortalama 5.5 saate inmektedir. Toplam kullanım ise YouTube ölçümlerinde ~22-24 saat aralığında kalmaktadır.",
-        "score": 0.27,
-        "contrary_percentage": 73
-      },
-      {
-        "claim": "H2 çip sayesinde kusursuz bağlantı ve cihazlar arası anında geçiş.",
-        "reality": "Apple ekosistemi içinde (iPhone ↔ Mac) kusursuz çalışmakta, ancak kalabalık Bluetooth ortamlarında veya eski cihazlarda anlık takılmalar (%8) rapor edilmiştir.",
-        "score": 0.92,
-        "contrary_percentage": 8
-      }
-    ],
-    "data_gaps": [
-      "price_history"
-    ],
-    "reviewers": [
-      {
-        "channel": "Teknoloji Rehberi",
-        "handle": "@teknoloji.rehberi",
-        "trust_score": 91.0,
-        "tier": "trusted",
-        "consistency": 94.0,
-        "sponsorship_ratio": 6.0,
-        "accuracy_delta": 14.0,
-        "subscriber_count": 450000,
-        "subscribers_label": "450B",
-        "contribution": "Bu kanalın ANC ve ses ölçümleri referans alınmıştır. Analiz ağırlığı %42'dir.",
-        "signals": [
-          {
-            "kind": "good",
-            "text": "Kontrollü oda ve sektör standardı test ekipmanları kullanılmaktadır."
-          },
-          {
-            "kind": "good",
-            "text": "Sponsorlu içerik oranı %6 olup, endüstri ortalamasının oldukça altındadır."
-          }
-        ]
-      },
-      {
-        "channel": "Kanal Tech",
-        "handle": "@kanal.tech",
-        "trust_score": 78.0,
-        "tier": "neutral",
-        "consistency": 86.0,
-        "sponsorship_ratio": 18.0,
-        "accuracy_delta": 8.0,
-        "subscriber_count": 2100000,
-        "subscribers_label": "2.1M",
-        "contribution": "Kanalın batarya ölçüm verisi kullanılmıştır. Ağırlığı %38'dir.",
-        "signals": [
-          {
-            "kind": "good",
-            "text": "İncelemelerinde 3 ay sonraki deneyim videolarına yer verilmektedir."
-          },
-          {
-            "kind": "warn",
-            "text": "Sözel olarak 30 saat derken ekran görüntüsündeki pil widget'ında 22 saat görülmüştür."
-          }
-        ]
-      }
-    ],
-    "xray_reveal": {
-      "before": {
-        "label": "YÜZEY · ÜRETİCİ GÖZÜ",
-        "tag": "DOĞRULANMAMIŞ",
-        "items": [
-          "Etiket: 9.999 ₺ → 7.849 ₺ (%22 İndirim)",
-          "Pil Ömrü: 30 Saat (Kutu Dahil)",
-          "Gürültü Engelleme: 2x Güçlü ANC"
-        ]
-      },
-      "after": {
-        "label": "RÖNTGEN · GERÇEK",
-        "tag": "GÜVEN 68/100",
-        "items": [
-          "Gerçek İndirim Oranı: %6 (Son 30 Günün Dibi: 7.400 ₺)",
-          "Gerçek Pil Ömrü: 22 Saat 18 Dakika (YouTube + Forum Ölçümü)",
-          "Gerçek Gürültü Engelleme: -34 dB (Donanım Avcısı Ölçümü)"
-        ]
-      }
-    }
-  },
-  "image_verification": {
-    "match_score": 96,
-    "tier": "good",
-    "label": "YÜKSEK UYUM",
-    "manufacturer_image_url": "file:///C:/Users/Akif/Desktop/MergeN/frontend/src/assets/airpods_pro_2_studio.png",
-    "real_image_url": "file:///C:/Users/Akif/Desktop/MergeN/frontend/src/assets/airpods_pro_2_real.png",
-    "verdict": "Stüdyo görseli fiziksel gerçeği birebir dürüstlükle yansıtıyor. Yapay zeka karşılaştırmamızda, AirPods Pro 2'nin tüm ayırt edici dış tasarım bileşenleri (USB-C girişi, hoparlör ızgaraları, LED yerleşimi ve kutu içeriği) kusursuz bir şekilde eşleşmiştir.",
-    "findings": [
-      {
-        "tier": "good",
-        "pct": 98,
-        "label": "Dış Geometri & Tasarım",
-        "note": "Kulaklık ve kutu kıvrımları stüdyo render'ı ile tamamen örtüşmektedir."
-      },
-      {
-        "tier": "good",
-        "pct": 97,
-        "label": "Şarj LED Konumu",
-        "note": "Ön yüzdeki durum LED'inin konumu ve yeşil ışık yansıması birebir uyumludur."
-      },
-      {
-        "tier": "good",
-        "pct": 96,
-        "label": "Konnektör Tasarımı",
-        "note": "Lightning yerine yeni eklenen USB-C portunun fiziksel derinliği doğrulanmıştır."
-      }
-    ],
-    "hotspots": [
-      {
-        "id": 1,
-        "label": "Şarj Kutusu — LED & Üst Yüzey",
-        "studio": { "x": 38, "y": 40 },
-        "real": { "x": 30, "y": 25 }
-      },
-      {
-        "id": 2,
-        "label": "Konnektör & Kulaklık Sap Ucu",
-        "studio": { "x": 72, "y": 68 },
-        "real": { "x": 55, "y": 62 }
-      }
-    ]
-  },
-  "video_analysis": [
-    {
-      "video_url": "https://www.youtube.com/watch?v=uV_0l7AZpIs",
-      "timestamp": "10:45-11:15",
-      "channel": "Kanal Tech",
-      "title": "AirPods Pro 2 İncelemesi — Batarya Performansı Testi",
-      "duration": "12:27",
-      "claimed_value": "30 Saat Pil Ömrü",
-      "visible_value": "22 Saat 18 Dakika Gerçek Kullanım",
-      "discrepancy": "0.26",
-      "summary": "İncelemede batarya testinde üretici tarafından vadedilen 30 saatlik sürenin gerçek kullanımda ortalama 22 saat civarında kaldığı ekran üzerindeki şarj durum göstergeleriyle doğrulanmıştır."
-    },
-    {
-      "video_url": "https://www.youtube.com/watch?v=GSwJK05PzEk",
-      "timestamp": "10:22-10:50",
-      "channel": "Gürültü Analizleri",
-      "title": "AirPods Pro 2 Type-C — ANC Gürültü Denetim Testi",
-      "duration": "15:50",
-      "claimed_value": "2 Kat Daha Güçlü ANC",
-      "visible_value": "Alt frekanslarda güçlü, insan sesinde normal ANC",
-      "discrepancy": null,
-      "summary": "Gürültü denetim modları testinde ANC performansı alt frekanslarda (motor, gürültü vb.) son derece başarılıyken insan sesinde beklendiği üzere sınırlıdır. İddia ile tutarlıdır."
-    }
-  ]
-}
+# Çapraz Platform (Python)
+python setup.py
 ```
 
-**Fiyat geçmişi verisi, Türkiye pazarı için **Akakçe**'nin kamuya açık fiyat takip altyapısından beslenerek "önce artır sonra indir" manipülasyonlarını tespit eder.**
-
-4. **Bilge Agent:** Tulpar ve Kam'ın topladığı binlerce veriyi süzgeçten geçirir. Kategorik skorları belirler, ürünün zayıf/güçlü yönlerini matrisler halinde döker.
-5. **Yargucu Agent:**Adaleti temsil eden Yargucu, kullanıcının bireysel ihtiyaçlarını anlamak için tasarlanmıştır. Önce dinamik sorular üretir, ardından LangGraph'ın **`interrupt_before`** özelliği kullanılarak pipeline duraklatılır ve kullanıcıdan yanıt alınır. State güncellendikten sonra kişiselleştirilmiş nihai kararını (AL / KOŞULLU AL / ALMA) üretir.
-6. **Erlik Agent:** Yeraltı tanrısı Erlik'ten ilham alan bu ajan, Yapay zeka halüsinasyonlarını ve onaylama yanlılığını (confirmation bias) engellemek için tasarlanmış bağımsız bir denetim katmanıdır. Advisor'ın ürettiği karara karşı olası en güçlü karşı argümanları sistematik olarak oluşturur. Kararı doğrudan değiştirmez; bunun yerine tespit ettiği zayıf noktaları kullanıcıya **bağlamsal uyarı widget'ları** olarak sunar.
-
-### 📊 Veri Kaynakları
-
-| Kaynak | Toplanan Veri | Amaç |
-|---|---|---|
-| Trendyol / Hepsiburada | Ürün yorumları, Q&A, satıcı bilgisi | Yorum analizi |
-| Akakçe | 90 günlük fiyat geçmişi | Sahte indirim tespiti |
-| YouTube | Video transkriptleri | Sponsorlu içerik & görsel karşılaştırma |
-| Technopat, DonanımHaber, Donanım Arşivi, Ekşisözlük, Şikayetvar | Organik kullanıcı deneyimleri | Doğrulama katmanı |
-| Tavily Search | Gerçek zamanlı web taraması | Güncel şikayet ve haber tespiti |
-
-### 🧠 State Yönetimi (ProductState) ve Akış
-Tüm ajanlar birbirleriyle merkezi bir `ProductState` (TypedDict) üzerinden haberleşir. LangGraph'ın **MemorySaver (Checkpointing)** altyapısı kullanılarak tüm hafıza diske kaydedilir, bu sayede sistem kullanıcı yanıtı beklerken askıya alınabilir ve sonrasında kaldığı yerden devam edebilir. Akış Döngüsü:
-
-`Mergen ➔ Tulpar ➔ Mergen ➔ Kam ➔ Mergen ➔ Bilge ➔ Mergen ➔ Yargucu ➔ Mergen ➔ Erlik ➔ END`
-
-### 🛡️ Performans, Maliyet ve Hukuki Uyumluluk (Sürdürülebilirlik)
-
-* **Gizlilik ve Veri Tutma Politikası:** Sistemimiz, e-ticaret platformlarındaki son kullanıcıların isim, kullanıcı adı, profil veya hesap bilgileri gibi hiçbir kişisel verisini sistemine dahil etmez ve çekmez. Research Agent mimarimiz, sadece kamuya açık anonim ürün yorumlarını ve metinsel değerlendirmeleri filtreleyerek işleme alır. Toplanan bu anonim veriler de sunucularımızda kalıcı olarak depolanmaz; LangGraph `MemorySaver` üzerindeki durum (state) sadece kullanıcının anlık oturumu (session) boyunca canlı tutulur ve analiz tamamlanıp nihai karar üretildiği an tamamen yok edilir. MergeN, bu veri minimizasyonu yaklaşımıyla KVKK ve GDPR prensiplerine tam uyumlu bir altyapıya sahiptir.
-
-* **Etik ve Dağıtık Veri Toplama Mimarisi:** Hedef platformların sunucu altyapılarına ek yük bindirmemek ve servis sürekliliğine saygı göstermek adına, `Research Agent` tamamen asenkron, dinamik gecikme (adaptive delay) ve akıllı hız limitleri (rate-limiting) uygulayan bir mimariyle çalışır. Gelişmiş kimlik doğrulama (header) optimizasyonları ve dağıtık veri toplama teknikleri sayesinde, hedef sistemlerin erişilebilirlik protokollerine uyumlu, kararlı ve platform dostu bir veri aktarım süreci yürütülür.
-
-* **Token ve Bütçe Optimizasyonu:** Dijital mecralardan toplanan binlerce metinsel değerlendirme ve uzun video transkriptleri, ham halleriyle büyük dil modellerine (LLM) doğrudan beslenmez. Sistemimiz, hiyerarşik bir Map-Reduce mimarisi işleterek verileri yapılandırılmış kümelere böler; organik olmayan anormallik barındıran veya manipülatif kalıplar içeren segmentleri önceden filtreleyerek özetler. Bu yaklaşım, bağlam penceresi (context window) limitlerinin aşılmasını engellerken, token tüketimini ve operasyonel API maliyetlerini minimum seviyede tutarak projenin finansal sürdürülebilirliğini en üst noktaya taşır.
-
-## 💸 API Maliyet Modeli
-
-MergeN, prototip ve erken büyüme aşamasında **sıfır API maliyetiyle** 
-çalışacak şekilde tasarlanmıştır. Tüm çekirdek servisler ücretsiz 
-katmanlar içinde kalınarak kullanılmaktadır:
-
-| Servis | Ücretsiz Limit | MergeN Kullanımı | Günlük Kapasite |
-|---|---|---|---|
-| Gemini 2.5 Flash | 1.500 istek/gün | ~6 istek/analiz | **~250 analiz/gün** |
-| Tavily Search API | 1.000 arama/ay | ~3 arama/analiz | ~333 analiz/ay |
-| YouTube Data API v3 | 10.000 ünite/gün | ~100 ünite/analiz | **~100 analiz/gün** |
-
-> **Darboğaz:** YouTube API kotası, günlük ~100 analizde tavan 
-> yapıyor. Büyüme aşamasında YouTube transkript önbellekleme 
-> (caching) ve YouTube API yerine alternatif transkript çekme 
-> yöntemleriyle bu limit 3-4 katına çıkarılabilir.
 ---
 
-## 📂 Proje Yapısı
-```text
+## 🚀 Sunucuları Başlatma ve Durdurma Scriptleri
+
+Kurulum tamamlandıktan (veya otomatik tetiklendikten) sonra sunucuları tek komutla çalıştırabilir ve durdurabilirsiniz.
+
+### 🟢 Sunucuları Başlatma (Start)
+- **Windows Batch**: `start_servers.bat`
+- **PowerShell**: `.\start_servers.ps1`
+- **Python**: `python start_servers.py`
+
+*(Gereksinimler yüklü değilse `start_servers` otomatik olarak önce `setup.py` çalıştırır, ardından Backend'i 8765 ve Frontend'i 5173 portunda ayağa kaldırıp tarayıcıyı açar).*
+
+### 🔴 Sunucuları Durdurma (Stop)
+- **Windows Batch**: `stop_servers.bat`
+- **PowerShell**: `.\stop_servers.ps1`
+- **Python**: `python stop_servers.py`
+
+---
+
+## 🐳 Docker & Docker Compose Kurulumu
+
+MergeN, konteyner mimarisinde çalıştırmak için hazır `Dockerfile` ve `docker-compose.yml` yapılandırmalarına sahiptir.
+
+### Docker Compose ile Tek Komutla Çalıştırma
+```bash
+# Servisleri derle ve arka planda başlat
+docker compose up --build -d
+
+# Logları takip etmek için
+docker compose logs -f
+```
+
+Servisler ayağa kalktıktan sonra:
+- **Frontend Dashboard**: `http://localhost:5173`
+- **Backend API**: `http://localhost:8765`
+
+### Konteynerleri Durdurmak İçin:
+```bash
+docker compose down
+```
+
+---
+
+## ☸️ Kubernetes (k8s) Dağıtımı
+
+Kümeye (cluster) canlı dağıtım veya yerel Kubernetes (Minikube / Docker Desktop K8s) testleri için `k8s/` dizininde manifest dosyaları yer almaktadır.
+
+### Otomatik Dağıtım Scripti (Windows):
+```cmd
+cd k8s
+deploy_k8s.bat
+```
+
+### Manuel Kubernetes Komutları:
+```bash
+# 1. ConfigMap ve Secret oluştur
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/secret.yaml
+
+# 2. Backend ve Frontend servislerini yayınla
+kubectl apply -f k8s/backend-deployment.yaml
+kubectl apply -f k8s/frontend-deployment.yaml
+
+# 3. Servis durumlarını kontrol et
+kubectl get pods,svc
+```
+
+---
+
+## 🔑 Çevre Değişkenleri (.env)
+
+```env
+# AI & Arama API Anahtarları
+GEMINI_API_KEY=AIzaSy...
+TAVILY_API_KEY=tvly-...
+
+# Model Atamaları
+MODEL_FLASH=gemini-3-flash
+MODEL_LITE=gemini-2.5-flash-lite
+MODEL_VISION=gemini-3-flash
+MODEL_PRO=gemini-3-flash
+
+# Sunucu URL'leri
+BACKEND_URL=http://localhost:8765
+FRONTEND_URL=http://localhost:5173
+
+# Önbellek Süresi (Saniye)
+CACHE_TTL_SECONDS=21600
+```
+
+---
+
+## 🔌 API Dokümantasyonu (Endpoints)
+
+FastAPI backend sunucusu `http://localhost:8765` portunda çalışır. Interaktif Swagger dokümantasyonuna `http://localhost:8765/docs` adresinden erişilebilir.
+
+### Ana Uç Noktalar
+
+| Metot | Uç Nokta | Açıklama |
+|-------|----------|----------|
+| `POST` | `/api/analyze/stream` | LangGraph pipeline analizini Server-Sent Events (SSE) formatında canlı yayınlar. |
+| `POST` | `/api/analyze/answer` | Advisor interrupt aşamasında kullanıcının verdiği yanıtları aktarır ve akışı devam ettirir. |
+| `GET` | `/api/analyze/summary/{thread_id}` | Chrome eklentisi için optimize edilmiş hafif JSON özeti üretir (< 2KB). |
+| `POST` | `/api/chat/` | Gemini Flash ile interaktif ürün sohbeti gerçekleştirir. |
+| `GET` | `/health` | API anahtarlarının ve veritabanı bağlantısının sağlık durumunu kontrol eder. |
+
+---
+
+## 🧩 Chrome Eklentisi Kurulumu
+
+1. Google Chrome tarayıcısını açın ve `chrome://extensions` adresine gidin.
+2. Sağ üst köşedeki **Geliştirici modu (Developer mode)** anahtarını aktif edin.
+3. **Paketlenmemiş öge yükle (Load unpacked)** butonuna tıklayın.
+4. Projedeki `/extension` klasörünü seçin.
+
+---
+
+## 📁 Proje Dizin Yapısı
+
+```
 MergeN/
-├── backend/          # FastAPI ve LangGraph Agent Pipeline
-├── frontend/         # React.js & Vite modern kullanıcı arayüzü
-├── scrapper/         # Çoklu platform veri toplama motoru (Trendyol, HB, YouTube)
-└── extention/         # Tarayıcı eklentisi
+├── backend/                  # FastAPI & LangGraph Multi-Agent Altyapısı
+│   ├── Dockerfile            # Backend Docker imaj dosyası
+│   ├── agents/               # 6 Uzman Ajan (Orchestrator, Research, X-Ray, Analysis, Advisor, Challenger)
+│   ├── routers/              # API Rotaları (Analyze SSE, Chat, Health)
+│   └── main.py               # FastAPI Giriş Noktası
+├── frontend/                 # React 19 + Vite Dashboard Arayüzü
+│   ├── Dockerfile            # Frontend Docker imaj dosyası
+│   └── package.json          # Node.js Bağımlılıkları
+├── k8s/                      # Kubernetes Manifest Dosyaları
+│   ├── configmap.yaml        # K8s ConfigMap
+│   ├── secret.yaml           # K8s Secret Şablonu
+│   ├── backend-deployment.yaml  # Backend K8s Deployment & Service
+│   ├── frontend-deployment.yaml # Frontend K8s Deployment & Service
+│   └── deploy_k8s.bat        # K8s Dağıtım Scripti
+├── scrapper/                 # Çok Kaynaklı Veri Toplama Motoru
+├── extension/                # Chrome Eklentisi (Manifest V3)
+├── docker-compose.yml        # Multi-container Docker Yapılandırması
+├── setup.py / setup.bat      # Otomatik Tak-Çalıştır Kurulum Scriptleri
+├── start_servers.py / .bat   # Hızlı Sunucu Başlatma Scriptleri (Eksikse Otomatik Setup Tetikler)
+├── stop_servers.py / .bat    # Hızlı Sunucu Durdurma Scriptleri
+├── requirements.txt          # Birleştirilmiş Kök Python Bağımlılıkları
+└── README.md                 # Teknik Dokümantasyon
 ```
-
----
-
-## 🚀 Kurulum ve Çalıştırma
-
-**Ön Gereksinimler:** Python 3.10+, Node.js 18+
-
-**1. Çevre Değişkenleri (.env):**
-Proje ana dizininde, `backend/` ve `scrapper/` dizinlerinde bulunan `.env.example` dosyalarını `.env` olarak kopyalayın ve içerisine gerekli API anahtarlarını (Gemini, Tavily) ekleyin.
-
-**2. Backend Kurulumu:**
-```bash
-cd backend
-pip install -r requirements.txt
-python -m uvicorn main:app --reload --port 8765
-```
-
-**3. Frontend Kurulumu:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-
-## 🔮 Geleceğe Yönelik Geliştirme Fikirleri
-MergeN sadece bir hackathon projesi değil, büyük bir pazar ihtiyacını karşılayan ölçeklenebilir bir girişimdir:
-- **B2C (Son Kullanıcı):** Ücretsiz temel tarama ve ileri düzey detaylı analizler için Freemium modeli. Ayrıca kullanıcıların yönlendirildiği alışveriş linkleri üzerinden **Affiliate (Satış Ortaklığı)** geliri.
-- **B2B (Kurumsal Çözümler):** Markalar ve e-ticaret satıcıları için rakip analizi, pazar duyarlılığı (sentiment) ölçümü ve "manipülasyon haritası" hizmetleri sağlayan API/Dashboard çözümleri.
-- **Mobil Uygulama (Barkod Okuma):** Fiziksel mağazada bir ürünü incelerken barkod okutarak saniyeler içinde MergeN röntgeni çekebilme.
-- **Dinamik Fiyat ve "Yapay İndirim" Uyarıcısı:** Satıcının fiyatı önce artırıp sonra indirdiği senaryoların gerçek zamanlı bildirimi.
-
-Demo Görüntüleri: 
----
-Erlik Raporu:
----
-<img width="517" height="399" alt="Ekran görüntüsü 2026-05-19 225220" src="https://github.com/user-attachments/assets/7d963e51-2cc9-4fa7-8b27-073f5fbcce6f" />
-
-Yargucu Raporu:
----
-<img width="661" height="430" alt="Ekran görüntüsü 2026-05-19 225106" src="https://github.com/user-attachments/assets/18f848bf-08b8-41e4-aae9-0bc642803a8b" />
-
-Danışmanla Sohbet
----
-<img width="398" height="381" alt="Ekran görüntüsü 2026-05-19 225127" src="https://github.com/user-attachments/assets/881f2f19-eb3b-4ae8-b1c9-b2e518791c87" />
-
-Üreticin Vaat Ettiği-Gerçek Kullanıcı Deneyimleri
----
-<img width="462" height="428" alt="Ekran görüntüsü 2026-05-19 225147" src="https://github.com/user-attachments/assets/21405726-c192-47e1-a1e2-6add135f3236" />
-

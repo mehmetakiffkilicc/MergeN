@@ -52,7 +52,11 @@ scratch/
 /mergen logo.png
 taily deneme/
 
+# Server PIDs
+.server_pids.json
+
 # OS
 .DS_Store
 Thumbs.db
+
 
